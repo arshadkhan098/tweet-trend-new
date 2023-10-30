@@ -1,14 +1,21 @@
 pipeline{
+    
     agent{
         node{
             label 'maven'
         }
-    }    
+    }
+    
+environment {
+    PATH = "/opt/apache-maven-3.9.5/bin:$PATH"
+}    
+
     stages{
-        stage ('trigerd pipeline'){
+        stage('build stage'){
             steps{
-                git branch: 'main', url: 'https://github.com/arshadkhan098/tweet-trend-new.git'
+                sh 'mvn clean deploy'
             }
         }
+        
     }
 }
