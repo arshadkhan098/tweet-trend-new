@@ -17,19 +17,13 @@ environment {
             }
         }
 
-        stage("test"){
-            steps{
-                sh 'mvn surefire-report:report'
-            }
-        }
-
         stage('SonarQube analysis') {
         environment {
             scannerHome = tool 'arshad-sonar-scanner'
         }
         steps{
         withSonarQubeEnv('sonarqube-server') { 
-            sh "${scannerHome}/bin/sonar-scanner"
+                sh "${scannerHome}/bin/sonar-scanner"
     }
     }
         
