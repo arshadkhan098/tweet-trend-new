@@ -17,8 +17,8 @@ environment {
             }
         }
 
-        stage{
-            steps("test"){
+        stage("test"){
+            steps{
                 sh 'mvn surefire-report:report'
             }
         }
