@@ -25,7 +25,7 @@ environment {
 
         stage('SonarQube analysis') {
         environment {
-            scannerHome = tool 'arshad-sonar-scanner'
+            scannerHome = tool 'sonar-scanner'
         }
         steps{
         withSonarQubeEnv('sonarqube-server') { 
