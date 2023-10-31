@@ -1,3 +1,4 @@
+def registry = 'https://arshadproject1.jfrog.io'
 pipeline{
     
     agent{
@@ -47,6 +48,32 @@ environment {
     }
   }
 
+    stage("Jar Publish") {
+        steps {
+            script {
+                    echo '<--------------- Jar Publish Started --------------->'
+                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"257c64f9-c9c6-4340-b9c9-301993a75790"
+                     def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
+                     def uploadSpec = """{
+                          "files": [
+                            {
+                              "pattern": "jarstaging/(*)",
+                              "target": "libs-release-local/{1}",
+                              "flat": "false",
+                              "props" : "${properties}",
+                              "exclusions": [ "*.sha1", "*.md5"]
+                            }
+                         ]
+                     }"""
+                     def buildInfo = server.upload(uploadSpec)
+                     buildInfo.env.collect()
+                     server.publishBuildInfo(buildInfo)
+                     echo '<--------------- Jar Publish Ended --------------->'  
+            
+            }
+        }   
 
+
+}
 }
 }
