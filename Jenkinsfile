@@ -2,13 +2,7 @@ def registry = 'https://arshadproject1.jfrog.io'
 def imageName = 'arshadproject1.jfrog.io/project1-docker-local/ttrend'
 def version   = '2.1.2'
 pipeline{
-    
-    agent{
-        node{
-            label 'maven'
-        }
-    }
-    
+    agent any
 environment {
     PATH = "/opt/apache-maven-3.9.5/bin:$PATH"
 }    
